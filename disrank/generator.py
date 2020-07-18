@@ -4,20 +4,26 @@ import requests
 import math
 import os
 
-class Generator:
-    def __init__(self):
-        self.default_bg = os.path.join(os.path.dirname(__file__), 'assets', 'card.png')
-        self.online     = os.path.join(os.path.dirname(__file__), 'assets', 'online.png')
-        self.offline    = os.path.join(os.path.dirname(__file__), 'assets', 'offline.png')
-        self.idle       = os.path.join(os.path.dirname(__file__), 'assets', 'idle.png')
-        self.dnd        = os.path.join(os.path.dirname(__file__), 'assets', 'dnd.png')
-        self.streaming  = os.path.join(os.path.dirname(__file__), 'assets', 'streaming.png')
-        self.font1      = os.path.join(os.path.dirname(__file__), 'assets', 'font.ttf')
-        self.font2      = os.path.join(os.path.dirname(__file__), 'assets', 'font2.ttf')
+default_bg = os.path.join(os.path.dirname(__file__), 'assets', 'card.png')
+online     = os.path.join(os.path.dirname(__file__), 'assets', 'online.png')
+offline    = os.path.join(os.path.dirname(__file__), 'assets', 'offline.png')
+idle       = os.path.join(os.path.dirname(__file__), 'assets', 'idle.png')
+dnd        = os.path.join(os.path.dirname(__file__), 'assets', 'dnd.png')
+streaming  = os.path.join(os.path.dirname(__file__), 'assets', 'streaming.png')
+font1      = os.path.join(os.path.dirname(__file__), 'assets', 'font.ttf')
+font2      = os.path.join(os.path.dirname(__file__), 'assets', 'font2.ttf')
 
-    def generate_profile(self, bg_image:str=None, profile_image:str=None, level:int=1, current_xp:int=0, user_xp:int=20, next_xp:int=100, user_position:int=1, user_name:str='Shahriyar#9770', user_status:str='online'):
+class Generator:
+    def __init__(self, bg_image:str=None, profile_image:str=None, level:int=1, current_xp:int=0, user_xp:int=20, next_xp:int=100, user_position:int=1, user_name:str='AliTheKing#9129', user_status:str='online'):
+        self.user_name = user_name
+        self.user_position = user_position
+        self.level = level
+        self.current_xp = current_xp
+        self.user_xp = user_xp
+        self.next_xp = next_xp
+        
         if not bg_image:
-            card = Image.open(self.default_bg).convert("RGBA")
+            card = Image.open(default_bg).convert("RGBA")
         else:
             bg_bytes = BytesIO(requests.get(bg_image).content)
             card = Image.open(bg_bytes).convert("RGBA")
@@ -37,76 +43,79 @@ class Generator:
                     y2 = nh + y1
 
                 card = card.crop((x1, y1, x2, y2)).resize((900, 238))
-
+        self.card = card
+        
         profile_bytes = BytesIO(requests.get(profile_image).content)
         profile = Image.open(profile_bytes)
         profile = profile.convert('RGBA').resize((180, 180))
-
+        self.profile = profile
+        
         if user_status == 'online':
-            status = Image.open(self.online)
+            status = Image.open(online)
         if user_status == 'offline':
-            status = Image.open(self.offline)
+            status = Image.open(offline)
         if user_status == 'idle':
-            status = Image.open(self.idle)
+            status = Image.open(idle)
         if user_status == 'streaming':
-            status = Image.open(self.streaming)
+            status = Image.open(streaming)
         if user_status == 'dnd':
-            status = Image.open(self.dnd)
-
+            status = Image.open(dnd)
         status = status.convert("RGBA").resize((40,40))
+        self.status = status
+        
+        # ======== Fonts to use =============
+        self.font_normal = ImageFont.truetype(font1, 36)
+        self.font_small = ImageFont.truetype(font1, 20)
+        self.font_signa = ImageFont.truetype(font2, 25)
 
+        # ======== Colors ========================
+        self.WHITE = (189, 195, 199)
+        self.DARK = (252, 179, 63)
+        self.YELLOW = (255, 234, 167)
+        
+
+    def generate(self):
         profile_pic_holder = Image.new(
-            "RGBA", card.size, (255, 255, 255, 0)
+            "RGBA", self.card.size, (255, 255, 255, 0)
         )  # Is used for a blank image so that i can mask
 
         # Mask to crop image
-        mask = Image.new("RGBA", card.size, 0)
+        mask = Image.new("RGBA", self.card.size, 0)
         mask_draw = ImageDraw.Draw(mask)
         mask_draw.ellipse(
             (29, 29, 209, 209), fill=(255, 25, 255, 255)
         )  # The part need to be cropped
 
         # Editing stuff here
-
-        # ======== Fonts to use =============
-        font_normal = ImageFont.truetype(self.font1, 36)
-        font_small = ImageFont.truetype(self.font1, 20)
-        font_signa = ImageFont.truetype(self.font2, 25)
-
-        # ======== Colors ========================
-        WHITE = (189, 195, 199)
-        DARK = (252, 179, 63)
-        YELLOW = (255, 234, 167)
-
         def get_str(xp):
             if xp < 1000:
                 return str(xp)
             if xp >= 1000 and xp < 1000000:
-                return str(round(xp / 1000, 1)) + "k"
+                return str(round(xp / 1000, 1)) + "K"
             if xp > 1000000:
                 return str(round(xp / 1000000, 1)) + "M"
 
-        draw = ImageDraw.Draw(card)
-        draw.text((245, 22), user_name, DARK, font=font_normal)
-        draw.text((245, 98), f"Rank #{user_position}", DARK, font=font_small)
-        draw.text((245, 123), f"Level {level}", DARK, font=font_small)
+        draw = ImageDraw.Draw(self.card)
+        draw.text((245, 22), self.user_name, DARK, font=self.font_normal)
+        draw.text((245, 98), f"Rank #{self.user_position}", DARK, font=self.font_small)
+        draw.text((245, 123), f"Level self.level}", DARK, font=self.font_small)
         draw.text(
             (245, 150),
-            f"Exp {get_str(user_xp)}/{get_str(next_xp)}",
+            f"Exp {get_str(self.user_xp)}/{get_str(self.next_xp)}",
             DARK,
-            font=font_small,
+            font=self.font_small,
         )
 
         # Adding another blank layer for the progress bar
         # Because drawing on card dont make their background transparent
-        blank = Image.new("RGBA", card.size, (255, 255, 255, 0))
+        blank = Image.new("RGBA", self.card.size, (255, 255, 255, 0))
         blank_draw = ImageDraw.Draw(blank)
         blank_draw.rectangle(
             (245, 185, 750, 205), fill=(255, 255, 255, 0), outline=DARK
         )
 
-        xpneed = next_xp - current_xp
-        xphave = user_xp - current_xp
+        xpneed = self.next_xp - self.current_xp
+        xphave = self.user_xp - self.current_xp
 
         current_percentage = (xphave / xpneed) * 100
         length_of_bar = (current_percentage * 4.9) + 248
@@ -114,15 +123,15 @@ class Generator:
         blank_draw.rectangle((248, 188, length_of_bar, 202), fill=DARK)
         blank_draw.ellipse((20, 20, 218, 218), fill=(255, 255, 255, 0), outline=DARK)
 
-        profile_pic_holder.paste(profile, (29, 29, 209, 209))
+        profile_pic_holder.paste(self.profile, (29, 29, 209, 209))
 
-        pre = Image.composite(profile_pic_holder, card, mask)
+        pre = Image.composite(profile_pic_holder, self.card, mask)
         pre = Image.alpha_composite(pre, blank)
 
         # Status badge
         # Another blank
         blank = Image.new("RGBA", pre.size, (255, 255, 255, 0))
-        blank.paste(status, (169, 169))
+        blank.paste(self.status, (169, 169))
 
         final = Image.alpha_composite(pre, blank)
         final_bytes = BytesIO()
