@@ -1,1 +1,1 @@
-from disrank import *
+from thkc_disrank import *
