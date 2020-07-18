@@ -31,4 +31,5 @@ await ctx.send(file=file)
 
 Make sure to run the generate part in an executor. 
 [Join here](https://discord.gg/7SaE8v2) for help. 
+
 **NOTE:** The server above is the original server of disrank, you might not get helped with this easier foked repository.
