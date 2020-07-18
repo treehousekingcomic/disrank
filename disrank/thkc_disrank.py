@@ -98,7 +98,7 @@ class DisrankGenerator:
         draw = ImageDraw.Draw(self.card)
         draw.text((245, 22), self.user_name, DARK, font=self.font_normal)
         draw.text((245, 98), f"Rank #{self.user_position}", DARK, font=self.font_small)
-        draw.text((245, 123), f"Level self.level}", DARK, font=self.font_small)
+        draw.text((245, 123), f"Level {self.level}", DARK, font=self.font_small)
         draw.text(
             (245, 150),
             f"Exp {get_str(self.user_xp)}/{get_str(self.next_xp)}",
