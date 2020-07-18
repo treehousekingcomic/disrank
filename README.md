@@ -1,6 +1,7 @@
 # Disrank (THKC FORKED)
 A lib to make good looking discord profile card.
 Forked to use "`class object`" mode like discord.Embed
+First you initiate disrank with the`DisrankGenerator`, then to get your disrank just do DisrankObject.generate()
 
 # Usage
 ```py
@@ -28,4 +29,5 @@ await ctx.send(file=file)
 ```
 
 Make sure to run the generate part in an executor. 
-Any help need [Join here](https://discord.gg/7SaE8v2)
+[Join here](https://discord.gg/7SaE8v2) for help. 
+**NOTE:** The server above is the original server of disrank, you might not get helped with this easier foked repository.
