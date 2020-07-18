@@ -2,7 +2,7 @@
 A lib to make good looking discord profile card.
 Forked to use "`class object`" mode like discord.Embed
 
-First you initiate disrank with the`DisrankGenerator`, then to get your disrank just do DisrankObject.generate()
+First you initiate disrank with the`DisrankGenerator` class, then to get your disrank just do DisrankObject.generate()
 
 # Usage
 ```py
