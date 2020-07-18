@@ -13,7 +13,7 @@ streaming  = os.path.join(os.path.dirname(__file__), 'assets', 'streaming.png')
 font1      = os.path.join(os.path.dirname(__file__), 'assets', 'font.ttf')
 font2      = os.path.join(os.path.dirname(__file__), 'assets', 'font2.ttf')
 
-class Generator:
+class DisrankGenerator:
     def __init__(self, bg_image:str=None, profile_image:str=None, level:int=1, current_xp:int=0, user_xp:int=20, next_xp:int=100, user_position:int=1, user_name:str='AliTheKing#9129', user_status:str='online'):
         self.user_name = user_name
         self.user_position = user_position
