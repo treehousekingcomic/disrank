@@ -4,7 +4,7 @@ Forked to use "`class object`" mode like discord.Embed
 
 # Usage
 ```py
-from disrank.generator import Generator
+from disrank import DisrankGenerator
 
 args = {
 	'bg_image' : '', # Background image link 
@@ -19,7 +19,7 @@ args = {
 }
 
 
-card = Generator(**args)
+card = DisrankGenerator(**args)
 image = card.generate()
 
 # In a discord command
