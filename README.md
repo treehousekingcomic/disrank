@@ -1,4 +1,4 @@
-# Disrank (THKC FORKED) |Not tested at the time of writting
+# Disrank (THKC FORKED) | Discontinued, reason: not working
 A lib to make good looking discord profile card.
 Forked to use "`class object`" mode like discord.Embed
 
