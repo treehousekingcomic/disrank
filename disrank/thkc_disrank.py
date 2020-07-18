@@ -96,13 +96,13 @@ class DisrankGenerator:
                 return str(round(xp / 1000000, 1)) + "M"
 
         draw = ImageDraw.Draw(self.card)
-        draw.text((245, 22), self.user_name, DARK, font=self.font_normal)
-        draw.text((245, 98), f"Rank #{self.user_position}", DARK, font=self.font_small)
-        draw.text((245, 123), f"Level {self.level}", DARK, font=self.font_small)
+        draw.text((245, 22), self.user_name, self.DARK, font=self.font_normal)
+        draw.text((245, 98), f"Rank #{self.user_position}", self.DARK, font=self.font_small)
+        draw.text((245, 123), f"Level {self.level}", self.DARK, font=self.font_small)
         draw.text(
             (245, 150),
             f"Exp {get_str(self.user_xp)}/{get_str(self.next_xp)}",
-            DARK,
+            self.DARK,
             font=self.font_small,
         )
 
@@ -111,7 +111,7 @@ class DisrankGenerator:
         blank = Image.new("RGBA", self.card.size, (255, 255, 255, 0))
         blank_draw = ImageDraw.Draw(blank)
         blank_draw.rectangle(
-            (245, 185, 750, 205), fill=(255, 255, 255, 0), outline=DARK
+            (245, 185, 750, 205), fill=(255, 255, 255, 0), outline=self.DARK
         )
 
         xpneed = self.next_xp - self.current_xp
@@ -120,8 +120,8 @@ class DisrankGenerator:
         current_percentage = (xphave / xpneed) * 100
         length_of_bar = (current_percentage * 4.9) + 248
 
-        blank_draw.rectangle((248, 188, length_of_bar, 202), fill=DARK)
-        blank_draw.ellipse((20, 20, 218, 218), fill=(255, 255, 255, 0), outline=DARK)
+        blank_draw.rectangle((248, 188, length_of_bar, 202), fill=self.DARK)
+        blank_draw.ellipse((20, 20, 218, 218), fill=(255, 255, 255, 0), outline=self.DARK)
 
         profile_pic_holder.paste(self.profile, (29, 29, 209, 209))
 
