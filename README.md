@@ -1,5 +1,6 @@
-# Disrank
-A lib to make good looking discord profile card
+# Disrank (THKC FORKED)
+A lib to make good looking discord profile card.
+Forked to use "`class object`" mode like discord.Embed
 
 # Usage
 ```py
@@ -17,7 +18,9 @@ args = {
 	'user_status' : 'online', # User status eg. online, offline, idle, streaming, dnd
 }
 
-image = Generator().generate_profile(**args)
+
+card = Generator(**args)
+image = card.generate()
 
 # In a discord command
 file = discord.File(fp=image, filename='image.png')
